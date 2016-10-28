@@ -1,0 +1,12 @@
+/node_modules
+
+/client/static/output
+
+/public/build
+
+*-debug.log*
+
+*-compiled.js
+*-compiled.js.map
+
+/.idea

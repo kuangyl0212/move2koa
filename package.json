@@ -1,0 +1,43 @@
+{
+  "name": "koa-project",
+  "version": "0.0.1",
+  "description": "blog powered by koa2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon start.js"
+  },
+  "author": "ruling",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rulingfong/move2koa.git"
+  },
+  "dependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "6.13.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2015-node6": "0.3.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-3": "6.5.0",
+    "koa": "2.0.0",
+    "koa-bodyparser": "3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-mongoose": "^1.0.9",
+    "koa-router": "7.0.0",
+    "koa-session": "^3.4.0",
+    "koa-static": "^2.0.0",
+    "md5": "^2.2.1",
+    "mongoose": "^4.6.5",
+    "nodemon": "^1.11.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-hot-loader": "^3.0.0-beta.5",
+    "react-router": "^2.8.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "wechat": "^2.0.3"
+  }
+}
