@@ -21,19 +21,23 @@ db.once('open',function(){
   console.log('connected to db');
 });
 
-app.use(bodyParser());
 
+
+app.use(bodyParser());
+app.keys = ['some keys1','some keys2']
 app.use(convert(session(app)));
 app.use(async (ctx, next)=>{
-    console.log('session',ctx.session);
+    console.log(ctx.method,ctx.url,'session',ctx.session);
+    ctx.session.views += 1;
     await next();
 })
 
+
+
+app.use(router.routes());
 app.use(convert(serve(path.join(__dirname, 'public'),{
     maxAge: 60 * 60 * 24 * 30,
 })));
-
-app.use(router.routes());
 
 app.listen('3000',()=>{
     console.log('app listening port 3000...')

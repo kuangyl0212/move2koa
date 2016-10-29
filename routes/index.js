@@ -78,15 +78,17 @@ router.post('/users/login', async (ctx, next)=> {
     var data = ctx.request.body;
     // console.log('data---',data);
     await User.findOne({email: data.email},function(err,user){
-        console.log('err',err,'user',user);
+        // console.log('err',err,'user',user);
         if (err) {
             ctx.body = new Error(err);
         } else {
             if (user) {
                 if (user.password == data.password) {
                     // 登录成功的后端操作 todo
+                    ctx.session.user = user;
                     ctx.body = {msg:'success',token:user._id};
                 } else {
+                    ctx.session.user = user;
                     ctx.body = {msg: 'pass_err'};
                 }
             } else {
