@@ -29,6 +29,7 @@ var Post = React.createClass({
                 createTime: new Date(),
             };
             let postData = {
+                credential: "include",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

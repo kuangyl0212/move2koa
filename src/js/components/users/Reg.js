@@ -99,6 +99,7 @@ export default class Reg extends Component {
             };
             // console.log('user---',user);
             let postData = {
+                credential: "include",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

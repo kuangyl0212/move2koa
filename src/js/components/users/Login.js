@@ -62,8 +62,9 @@ export default class Login extends Component {
                 password: md5(password),
             };
             let postData = {
+                credential: "include",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 method: "POST",
                 body: JSON.stringify(user),
@@ -106,23 +107,23 @@ export default class Login extends Component {
     render() {
         return (
             <div style={styles.mask}>
-                <div style={styles.modal}>
+                <div style={styles.modal}><form method='post' action='/users/login'>
                     <label style={styles.labels}>
                         <div style={styles.tag}>邮箱：</div>
-                        <input type="text" placeholder="email"
+                        <input type="text" placeholder="email" name='emial'
                         value={this.state.email}
                         onChange={this._changeHandler.bind(this)}/>
                         <div style={styles.msg}>{this.state.email_msg}</div>
                     </label>
                     <label style={styles.labels}>
                         <div style={styles.tag}>密码：</div>
-                        <input type="password" placeholder="password"
+                        <input type="password" placeholder="password" name='password'
                         value={this.state.password}
                         onChange={this._changeHandler.bind(this)}/>
                         <div style={styles.msg}>{this.state.pass_msg}</div>
                     </label>
-                    <button onClick={this._submit.bind(this)}>登录</button>
-                    <div style={styles.msg}>{this.state.login_msg}</div>
+                    <button onClick={this._submit.bind(this)}>登录</button><input type='submit' value='login'/>
+                    <div style={styles.msg}>{this.state.login_msg}</div></form>
                 </div>
             </div>
         )

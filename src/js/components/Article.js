@@ -13,6 +13,7 @@ class Article extends Component{
     componentWillMount () {
         console.log('props---',this.props);
         fetch('/article?id=' + this.props.params.id,{
+            credential: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

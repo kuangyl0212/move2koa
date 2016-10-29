@@ -10,7 +10,7 @@ var UEditor = React.createClass({
     getDefaultProps: function () {
         return {
             disabled: false,
-            height: 500,
+            height: 300,
             content: '',
             id: 'editor'
         };
@@ -32,17 +32,19 @@ var UEditor = React.createClass({
         var id = this.props.id;
         var ue = UE.getEditor(id, {
             // 工具栏，不配置有默认项目
-            // toolbars: [[
-            //     'fullscreen', 'source', '|', 'undo', 'redo', '|',
-            //     'bold', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch',
-            //     '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
-            //     'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-            //     'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-            //     'indent', '|',
-            //     'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-            //     'emotion',
-            //     'horizontal', '|', 'date', 'time', '|', 'insertimage'
-            // ]],
+            toolbars: [[
+                'fullscreen', 'source', '|',
+                'undo', 'redo', '|',
+                'bold', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch','|',
+                'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist','blockquote', '|',
+                'selectall', 'cleardoc', '|',
+                'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                'indent', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                'link','insertimage',  'map', 'emotion','|',
+                'horizontal', '|', 'date', 'time', '|', 
+            ]],
             lang: 'zh-cn',
             // 字体
             'fontfamily': [
@@ -59,11 +61,11 @@ var UEditor = React.createClass({
                 {label: '', name: 'timesNewRoman', val: 'times new roman'}
             ],
             // 字号
-            'fontsize': [10, 11, 12, 14, 16, 18, 20, 24, 36],
+            'fontsize': [9,10, 11, 12, 14, 16, 18, 20,22, 24, 36],
             // 为编辑器实例添加一个路径，必需项
             'UEDITOR_HOME_URL': '/javascripts/ueditor/',
             // 上传图片时后端提供的接口
-            serverUrl: window.api_host + '/innerMessage/uploadImage',
+            serverUrl: '/ueditor/uploadImage',
             enableAutoSave: true,
             autoHeightEnabled: true,
             initialFrameHeight: this.props.height,

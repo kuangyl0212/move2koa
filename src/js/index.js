@@ -18,19 +18,25 @@ import Article from './components/Article';
 
 var App = React.createClass({
     componentWillMount(){
-        // 不做验证
-        // fetch('/users/check',{
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     method: "GET"
-        //    })
-        //     .then((res)=>{
-        //         return res.json();
-        //     })
-        //     .then((result)=>{console.log('result---',result)})
-        //     .catch((err)=>{console.log('error',err)})
+
+        // 自适应布局？ 似乎不需要 反正我直接用rem
+        // (function (doc, win) {
+        //     var docEl = doc.documentElement,
+        //         resizeEvt = 'onorientationchange' in window ? 'onorientationchange' : 'resize',
+        //         recalc = function () {
+        //             var clientWidth = docEl.clientWidth;
+        //             if (!clientWidth) return;
+        //             if(clientWidth>=750){
+        //                 docEl.style.fontSize = '100px';
+        //             }else{
+        //                 docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        //             }
+        //         };
+
+        //     if (!doc.addEventListener) return;
+        //     win.addEventListener(resizeEvt, recalc, false);
+        //     doc.addEventListener('DOMContentLoaded', recalc, false);
+        // })(document, window);
 
     },
     render(){

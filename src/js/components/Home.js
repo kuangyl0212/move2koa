@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Loading from './Loading';
+// import ajax from '../common/ajax';
+import $ from 'jquery'
+
 var Link = require('react-router').Link;
 
 class Home extends Component{
@@ -11,22 +14,34 @@ class Home extends Component{
         }
     }
     componentWillMount () {
-        fetch('/home',{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'get'
-        })
-            .then((res)=>{return res.json()})
-            .then((json)=>{
-                // console.log('json---',json);
-                this.setState({
-                    isFetching: false,
-                    posts: json,
-                })
+        // 改ajax试试
+        let successFun = (json)=>{
+            // console.log('json---',json)
+            this.setState({
+                posts: json,
+                isFetching: false
             })
-            .catch((err)=>{console.log('error',err)});
+        }
+        $.ajax({url: '/home',
+            success: successFun,
+        })
+        // fetch('/home',{
+        //     credential: "include",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     method: 'get'
+        // })
+        //     .then((res)=>{return res.json()})
+        //     .then((json)=>{
+        //         // console.log('json---',json);
+        //         this.setState({
+        //             isFetching: false,
+        //             posts: json,
+        //         })
+        //     })
+        //     .catch((err)=>{console.log('error',err)});
     }
     render () {
         // console.log('state---',this.state.posts);
