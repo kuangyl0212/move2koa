@@ -86,6 +86,7 @@ var styles = {
     container: {
         paddingLeft: '1rem',
         paddingRight: '1rem',
+        overflow: 'hidden',
     },
 };
 
