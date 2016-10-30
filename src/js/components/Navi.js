@@ -7,29 +7,26 @@ class Navi extends React.Component {
         this.state = {
             data: [
                 {name:'首页',link:'home'},
-                {name:'分类',link:'class'},
                 {name:'发表',link:'post'},
-                {name:'关于',link:'about'},
-                {name:'登录',link:'login'},
-                {name:'注册',link:'reg'}
+                {name:'用户中心',link:'profile'},
                 ]
         }
     }
     clickHandler(event) {
         // console.log('click',event.target.textContent);
-        switch (event.target.textContent) {
-            case '首页':
-                break;
-            case '注册':
-                break;
-        }
+        // switch (event.target.textContent) {
+        //     case '首页':
+        //         break;
+        //     case '注册':
+        //         break;
+        // }
     }
     render() {
         // console.log('render-->Navi');
         var navView = [];
         this.state.data.map((item,i)=>{
             // console.log(item);
-            navView.push(<div key={i} style={styles.naviItem} onClick={this.clickHandler.bind(this)}>
+            navView.push(<div key={i} style={styles.naviItem} >
                 <Link style={styles.link} activeStyle={{color: '#099'}} to={item.link}>{item.name}</Link>
             </div>)
         });

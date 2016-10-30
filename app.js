@@ -13,7 +13,9 @@ const config = require('./common/config');
 const app = new Koa();
 
 mongoose.set('debug', true);
-mongoose.connect('mongodb://' + config.dbAddress + ':' + config.dbPort + '/' + config.dbName);
+// mongoose.connect('mongodb://' + config.dbUser + ':' + config.dnPwd + '@'
+//     + config.dbAddress + ':' + config.dbPort + '/' + config.dbName);
+mongoose.connect('mongodb://blogUser:blogAdmin@localhost:24678/blog');
 const db = mongoose.connection;
 db.on('error',console.error.bind(console,'连接错误:'));
 db.once('open',function(){
@@ -24,7 +26,7 @@ db.once('open',function(){
 
 
 app.use(bodyParser());
-app.keys = ['some keys1','some keys2']
+app.keys = ['some keys1']
 app.use(convert(session(app)));
 app.use(async (ctx, next)=>{
     console.log(ctx.method,ctx.url,'session',ctx.session);

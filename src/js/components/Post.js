@@ -2,6 +2,8 @@ var React = require('react');
 
 import UEditor from './UEditor';
 
+import $ from 'jquery';
+
 var Post = React.createClass({
     getInitialState: function () {
         return ({
@@ -22,28 +24,47 @@ var Post = React.createClass({
     submit: function () {
         let title =this.state.title;
         let content = this.refs.ueditor.getContent();
+        let successFun = (json)=>{
+            console.log('json---',json);
+            if (json == 'success') {
+                alert('成功！跳转到首页')
+                this.props.history.push('/home');
+            }
+            if (json == 'title_exist') {
+                alert('标题已经存在，换一个试试？')
+            }
+            if (json == 'err') {
+                alert('出错了-_-||')
+            }
+        }
         if (title != '' & content != '') {
             let post = {
                 title: title,
                 content: content,
                 createTime: new Date(),
             };
-            let postData = {
-                credential: "include",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify(post)
-            };
-            fetch('/post',postData).then(function (res) {
-                // console.log('res---',res);
-                return res.json();
-            }).then((json)=>{
-                // console.log('json---',json);
+            $.ajax({
+                url: '/post',
+                type: 'post',
+                data: post,
+                success: successFun
             })
-                .catch((err)=>{console.log('error',err)});
+            // let postData = {
+            //     credential: "include",
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     method: "POST",
+            //     body: JSON.stringify(post)
+            // };
+            // fetch('/post',postData).then(function (res) {
+            //     // console.log('res---',res);
+            //     return res.json();
+            // }).then((json)=>{
+            //     // console.log('json---',json);
+            // })
+            //     .catch((err)=>{console.log('error',err)});
         } else {
             // todo 写一个弹窗组件替代alert
             alert('标题或正文为空，请完善后提交！');

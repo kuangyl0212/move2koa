@@ -8,9 +8,10 @@ var Navi = require('./components/Navi');
 
 import Home from './components/Home';
 
-import Reg from './components/users/Reg';
+// import Reg from './components/users/Reg';
 
-import Login from './components/users/Login';
+// import Login from './components/users/Login';
+import Profile from './components/users/Profile';
 
 var Post = require('./components/Post');
 
@@ -55,9 +56,8 @@ ReactDOM.render((
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path='(home)' component={Home}/>
-            <Route path='post' components={Post}/>
-            <Route path='reg' component={Reg}/>
-            <Route path='login' component={Login}/>
+            <Route path='post' component={Post} />
+            <Route path='profile' component={Profile} />
             <Route path="article/:id" component={Article}/>
         </Route>
     </Router>

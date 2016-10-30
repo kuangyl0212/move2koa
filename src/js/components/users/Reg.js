@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import md5 from 'md5';
+import $ from 'jquery';
 
 export default class Reg extends Component {
     constructor(props) {
@@ -58,6 +59,35 @@ export default class Reg extends Component {
         }
     }
     _submit(event){
+        let successFun = (json)=>{
+            if (json.msg) {
+                switch (json.msg) {
+                    case "success":
+                        // 这是注册成功的路径
+                        setTimeout(()=>{
+                            this.props.history.push('/login');
+                        },1000);
+                        this.setState({
+                            reg_msg: '注册成功，即将跳至登录页！'
+                        });
+                        break;
+                    case "exist":
+                        this.setState({
+                            user_msg: "用户名已存在！"
+                        });
+                        break;
+                    case "email_exist":
+                        this.setState({
+                            email_msg: "邮箱已注册！"
+                        });
+                        break;
+                } 
+            } else {
+                this.setState({
+                    reg_msg: '注册失败！'
+                });
+            }
+        }
         // 清空消息
         if (this.state.reg_msg != '') this.setState({
             reg_msg:'',
@@ -97,45 +127,51 @@ export default class Reg extends Component {
                 email: email,
                 password: md5(password),
             };
+            $.ajax({
+                url: '/users/reg',
+                type: 'post',
+                data: user,
+                success: successFun
+            })
             // console.log('user---',user);
-            let postData = {
-                credential: "include",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify(user),
-            };
-            fetch('/users/reg',postData).then(function (res) {
-                // console.log('res---',res);
-                return res.json();
-            }).then((json)=>{
-                // console.log('json---',json);
-                switch (json.msg) {
-                    case "success":
-                        // 这是注册成功的路径
-                        setTimeout(()=>{
-                            this.props.history.push('/login');
-                        },1000);
-                        this.setState({
-                            reg_msg: '注册成功，即将跳至登录页！'
-                        });
-                        break;
-                    case "exist":
-                        this.setState({
-                            user_msg: "用户名已存在！"
-                        });
-                        break;
-                    case "email_exist":
-                        this.setState({
-                            email_msg: "邮箱已注册！"
-                        });
-                        break;
-                }
-            }).catch((err)=>{this.setState({
-                reg_msg: '注册失败！'
-            })});
+            // let postData = {
+            //     credential: "include",
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     method: "POST",
+            //     body: JSON.stringify(user),
+            // };
+            // fetch('/users/reg',postData).then(function (res) {
+            //     // console.log('res---',res);
+            //     return res.json();
+            // }).then((json)=>{
+            //     // console.log('json---',json);
+            //     switch (json.msg) {
+            //         case "success":
+            //             // 这是注册成功的路径
+            //             setTimeout(()=>{
+            //                 this.props.history.push('/login');
+            //             },1000);
+            //             this.setState({
+            //                 reg_msg: '注册成功，即将跳至登录页！'
+            //             });
+            //             break;
+            //         case "exist":
+            //             this.setState({
+            //                 user_msg: "用户名已存在！"
+            //             });
+            //             break;
+            //         case "email_exist":
+            //             this.setState({
+            //                 email_msg: "邮箱已注册！"
+            //             });
+            //             break;
+            //     }
+            // }).catch((err)=>{this.setState({
+            //     reg_msg: '注册失败！'
+            // })});
         } else {
             // 填写不完全
             user_name        == '' && this.setState({user_msg: '请设置用户名！'});
@@ -147,7 +183,6 @@ export default class Reg extends Component {
 
     render() {
         return (
-            <div style={styles.mask}>
                 <div style={styles.modal}>
                     <label style={styles.labels}>
                         <div style={styles.tag}>用户名：</div>
@@ -180,7 +215,6 @@ export default class Reg extends Component {
                     <button onClick={this._submit.bind(this)}>注册</button>
                     <div style={styles.msg}>{this.state.reg_msg}</div>
                 </div>
-            </div>
         )
 
     }

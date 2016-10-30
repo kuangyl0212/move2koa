@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Loading from './Loading';
+import $ from 'jquery';
+
 var Link = require('react-router').Link;
 
 class Article extends Component{
@@ -11,24 +13,34 @@ class Article extends Component{
         }
     }
     componentWillMount () {
-        console.log('props---',this.props);
-        fetch('/article?id=' + this.props.params.id,{
-            credential: "include",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'get',
-        })
-            .then((res)=>{return res.json()})
-            .then((json)=>{
-                // console.log('json---',json);
-                this.setState({
+        let successFun = (json)=>{
+            this.setState({
                     isFetching: false,
                     article: json,
                 })
-            })
-            .catch((err)=>{console.log('error',err)});
+        };
+        $.ajax({
+            url: '/article?id=' + this.props.params.id,
+            success: successFun,
+        })
+        // console.log('props---',this.props);
+        // fetch('/article?id=' + this.props.params.id,{
+        //     credential: "include",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     method: 'get',
+        // })
+        //     .then((res)=>{return res.json()})
+        //     .then((json)=>{
+        //         // console.log('json---',json);
+        //         this.setState({
+        //             isFetching: false,
+        //             article: json,
+        //         })
+        //     })
+        //     .catch((err)=>{console.log('error',err)});
     }
     render () {
         // console.log('props---',props);

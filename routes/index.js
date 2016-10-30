@@ -35,20 +35,41 @@ router.get('/article',async (ctx,next)=>{
     });
     await next();
 });
+
+// 发表文章
 router.post('/post',async (ctx,next)=>{
     console.log('POST /post',ctx.request.body);
+    await Post.findOne({title: ctx.request.body.title},(err,post)=>{
+        console.log('11111',err,post)
+        if (err) ctx.body = 'err';
+        if (post) ctx.body = 'title_exist';
+    })
     var post = new Post({
         title: ctx.request.body.title,
         content: ctx.request.body.content,
         createTime: ctx.request.body.createTime,
     });
-    post.save();
+    await post.save().then(()=>{
+        ctx.body = 'success';
+    });
     await next()
 });
 
 // 用户
 router.get('/users/check', async(ctx, next)=> {
     console.log('get usercheck---');
+    console.log('check---',ctx.session);
+    if (ctx.session.uid) {
+        await User.findOne({_id: ctx.session.uid},(err,user)=>{
+            delete user.password;
+            if (user) {
+                ctx.body = {
+                    code: 1,
+                    user: user
+                }
+            } else ctx.body = 0;
+        })
+    } else ctx.body = 0;
     await next();
 });
 
@@ -85,7 +106,7 @@ router.post('/users/login', async (ctx, next)=> {
             if (user) {
                 if (user.password == data.password) {
                     // 登录成功的后端操作 todo
-                    ctx.session.user = user;
+                    ctx.session.uid = user._id;
                     ctx.body = {msg:'success',token:user._id};
                 } else {
                     ctx.session.user = user;
@@ -98,5 +119,12 @@ router.post('/users/login', async (ctx, next)=> {
     })
     await next()
 });
+
+router.get('/users/logout',async (ctx, next)=>{
+    console.log('logout...')
+    ctx.session.uid = null;
+    ctx.body = 'success';
+    await next()
+})
 
 module.exports = router;

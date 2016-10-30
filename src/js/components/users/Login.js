@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import md5 from 'md5';
+import $ from 'jquery';
 
 export default class Login extends Component {
     constructor(props) {
@@ -38,6 +39,35 @@ export default class Login extends Component {
         }
     }
     _submit(event){
+        let successFun = (json) => {
+            if (json.msg) {
+                switch (json.msg) {
+                    case "success":
+                        // 这是注册成功的路径
+                        // 登录成功存入token（mongodb自动生成的_id） 下次验证 或者 获取用户信息的时候用
+                        // localStorage.setItem('token',json.token);
+                        setTimeout(()=>{this.props.history.push('/home')},1000);
+                        this.setState({
+                            login_msg: '登录成功，跳到首页！'
+                        });
+                        break;
+                    case "not_exist":
+                        this.setState({
+                            email_msg: "邮箱未注册！"
+                        });
+                        break;
+                    // 密码错误
+                    case "pass_err":
+                        this.setState({
+                            pass_msg: "密码错了！"
+                        })
+                }
+            } else {
+                this.setState({
+                login_msg: '登录失败！'
+                })
+            };
+        }
         if (this.state.login_msg != '') this.setState({
             login_msg:'',
             email_msg:'',
@@ -61,43 +91,49 @@ export default class Login extends Component {
                 email: email,
                 password: md5(password),
             };
-            let postData = {
-                credential: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(user),
-            };
-            fetch('/users/login',postData).then(function (res) {
-                // console.log('res---',res);
-                return res.json();
-            }).then((json)=>{
-                // console.log('json---',json);
-                switch (json.msg) {
-                    case "success":
-                        // 这是注册成功的路径
-                        // 登录成功存入token（mongodb自动生成的_id） 下次验证 或者 获取用户信息的时候用
-                        localStorage.setItem('token',json.token);
-                        setTimeout(()=>{this.props.history.push('/home')},1000);
-                        this.setState({
-                            login_msg: '登录成功，跳到首页！'
-                        });
-                        break;
-                    case "not_exist":
-                        this.setState({
-                            email_msg: "邮箱未注册！"
-                        });
-                        break;
-                    // 密码错误
-                    case "pass_err":
-                        this.setState({
-                            pass_msg: "密码错了！"
-                        })
-                }
-            }).catch((err)=>{this.setState({
-                login_msg: '登录失败！'
-            })});
+            $.ajax({
+                url: '/users/login',
+                type: 'post',
+                data: user,
+                success: successFun,
+            })
+            // let postData = {
+            //     credential: "include",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     method: "POST",
+            //     body: JSON.stringify(user),
+            // };
+            // fetch('/users/login',postData).then(function (res) {
+            //     // console.log('res---',res);
+            //     return res.json();
+            // }).then((json)=>{
+            //     // console.log('json---',json);
+            //     switch (json.msg) {
+            //         case "success":
+            //             // 这是注册成功的路径
+            //             // 登录成功存入token（mongodb自动生成的_id） 下次验证 或者 获取用户信息的时候用
+            //             localStorage.setItem('token',json.token);
+            //             setTimeout(()=>{this.props.history.push('/home')},1000);
+            //             this.setState({
+            //                 login_msg: '登录成功，跳到首页！'
+            //             });
+            //             break;
+            //         case "not_exist":
+            //             this.setState({
+            //                 email_msg: "邮箱未注册！"
+            //             });
+            //             break;
+            //         // 密码错误
+            //         case "pass_err":
+            //             this.setState({
+            //                 pass_msg: "密码错了！"
+            //             })
+            //     }
+            // }).catch((err)=>{this.setState({
+            //     login_msg: '登录失败！'
+            // })});
         } else {
             // 填写不完全
             email            == '' && this.setState({email_msg: '请填写邮箱！'});
@@ -106,26 +142,24 @@ export default class Login extends Component {
     }
     render() {
         return (
-            <div style={styles.mask}>
-                <div style={styles.modal}><form method='post' action='/users/login'>
+                <div style={styles.modal}>
                     <label style={styles.labels}>
                         <div style={styles.tag}>邮箱：</div>
-                        <input type="text" placeholder="email" name='emial'
+                        <input type="text" placeholder="email"
                         value={this.state.email}
                         onChange={this._changeHandler.bind(this)}/>
                         <div style={styles.msg}>{this.state.email_msg}</div>
                     </label>
                     <label style={styles.labels}>
                         <div style={styles.tag}>密码：</div>
-                        <input type="password" placeholder="password" name='password'
+                        <input type="password" placeholder="password"
                         value={this.state.password}
                         onChange={this._changeHandler.bind(this)}/>
                         <div style={styles.msg}>{this.state.pass_msg}</div>
                     </label>
-                    <button onClick={this._submit.bind(this)}>登录</button><input type='submit' value='login'/>
-                    <div style={styles.msg}>{this.state.login_msg}</div></form>
+                    <button onClick={this._submit.bind(this)}>登录</button>
+                    <div style={styles.msg}>{this.state.login_msg}</div>
                 </div>
-            </div>
         )
 
     }
