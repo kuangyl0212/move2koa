@@ -15,14 +15,25 @@ export default class Navigator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMoblie: false,
+      windowWidth: window.innerWidth
     }
   }
-  componentWillMount() {
-    console.log(window.clientWidth);
+  handleResize(e) {
+    this.setState({windowWidth: window.innerWidth});
+  }
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize.bind(this));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize.bind(this));
   }
   render() {
-    let navView = config.data.map((item,i)=>{
+    let navView;
+    console.log('state---',this.state);
+    if (this.state.windowWidth < 750) {
+      navView = <Dropdown/>
+    } else {
+      navView = config.data.map((item,i)=>{
           return (
             <div key={i} className="navItem" >
               <Link className="link" activeClassName="active" to={item.link}>
@@ -32,10 +43,10 @@ export default class Navigator extends React.Component {
             </div>
           )
         });
+    }
     return (
       <div className="placeHolder">
         <nav className="navContainer">
-          <Dropdown />
           {navView}
         </nav>
       </div>

@@ -1,6 +1,6 @@
 var React = require('react');
 
-import UEditor from './UEditor';
+// import UEditor from './UEditor';
 
 import $ from 'jquery';
 
@@ -78,7 +78,7 @@ var Post = React.createClass({
                     标题：
                     <input type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
                 </label>
-                <UEditor ref="ueditor"/>
+                // <UEditor ref="ueditor"/>
                 <button onClick={()=>this.submit()}>确认</button>
             </div>
         )
