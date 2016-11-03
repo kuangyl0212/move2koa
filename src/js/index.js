@@ -1,9 +1,12 @@
-var React = require('react');
-// import React from 'react';
-var ReactDOM = require('react-dom');
+'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
-var { Router, Route, hashHistory, IndexRoute } = require('react-router');
+import Navigator from './components/navigator';
 var Navi = require('./components/Navi');
+
+
 // var Home = require('./components/Home');
 
 import Home from './components/Home';
@@ -20,31 +23,12 @@ import Article from './components/Article';
 var App = React.createClass({
     componentWillMount(){
 
-        // 自适应布局？ 似乎不需要 反正我直接用rem
-        // (function (doc, win) {
-        //     var docEl = doc.documentElement,
-        //         resizeEvt = 'onorientationchange' in window ? 'onorientationchange' : 'resize',
-        //         recalc = function () {
-        //             var clientWidth = docEl.clientWidth;
-        //             if (!clientWidth) return;
-        //             if(clientWidth>=750){
-        //                 docEl.style.fontSize = '100px';
-        //             }else{
-        //                 docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
-        //             }
-        //         };
-
-        //     if (!doc.addEventListener) return;
-        //     win.addEventListener(resizeEvt, recalc, false);
-        //     doc.addEventListener('DOMContentLoaded', recalc, false);
-        // })(document, window);
-
     },
     render(){
         return (
             <div>
-                <Navi/>
-                 {this.props.children}
+                <Navigator/>
+                {this.props.children}
             </div>
         )
     }

@@ -1,0 +1,44 @@
+'use strict';
+import React from 'react';
+import { Link } from 'react-router';
+
+import Dropdown from './Dropdown';
+import config from './config';
+
+/* 
+ * 这是导航栏组件 
+ * 窄屏幕下只显示图标不显示文字 宽屏显示文字
+ * 点击左侧菜单键弹出下拉菜单
+ * 点击右侧用户图标显示用户中心
+*/
+export default class Navigator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMoblie: false,
+    }
+  }
+  componentWillMount() {
+    console.log(window.clientWidth);
+  }
+  render() {
+    let navView = config.data.map((item,i)=>{
+          return (
+            <div key={i} className="navItem" >
+              <Link className="link" activeClassName="active" to={item.link}>
+                {item.img && <img className="img" src={item.img} />}
+                <span className="text">{item.name}</span>
+              </Link>
+            </div>
+          )
+        });
+    return (
+      <div className="placeHolder">
+        <nav className="navContainer">
+          <Dropdown />
+          {navView}
+        </nav>
+      </div>
+    )
+  }
+}

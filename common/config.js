@@ -1,4 +1,5 @@
 module.exports = {
+    serverPort: '3000',
     dbAddress: 'localhost',
     dbPort: '24678',
     dbName: 'blog',

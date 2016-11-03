@@ -39,19 +39,20 @@ router.get('/article',async (ctx,next)=>{
 // 发表文章
 router.post('/post',async (ctx,next)=>{
     console.log('POST /post',ctx.request.body);
-    await Post.findOne({title: ctx.request.body.title},(err,post)=>{
-        console.log('11111',err,post)
+    await Post.findOne({title: ctx.request.body.title},async (err,post)=>{
+        // console.log('11111',err,post)
         if (err) ctx.body = 'err';
-        if (post) ctx.body = 'title_exist';
+        if (post) {ctx.body = 'title_exist';} else {
+            var post = new Post({
+                title: ctx.request.body.title,
+                content: ctx.request.body.content,
+                createTime: ctx.request.body.createTime,
+            });
+            await post.save().then(()=>{
+                ctx.body = 'success';
+            });
+        }
     })
-    var post = new Post({
-        title: ctx.request.body.title,
-        content: ctx.request.body.content,
-        createTime: ctx.request.body.createTime,
-    });
-    await post.save().then(()=>{
-        ctx.body = 'success';
-    });
     await next()
 });
 

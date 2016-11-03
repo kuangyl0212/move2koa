@@ -16,7 +16,139 @@ body {
   transform: translate(-50%, -50%) scale(0.6, 0.6);
 }
 
-/*home*/
+/* nav --start */
+.placeHolder {
+  height: 3rem;
+  width: '100%';
+}
+.navContainer {
+  display: flex;
+  height: 3rem;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: fixed;
+  top: 0;
+  box-shadow: 0 1px 15px #dee1e2;
+  background-color: #fff;
+  z-index: 9;
+}
+
+.menuBtn {
+  cursor: pointer;
+}
+.hide {
+  display: none;
+}
+.show {
+  position: relative;
+  height: 6rem;
+  top: 3.2rem;
+  opacity: 1;
+  color: #f00;
+  background-color: #666;
+  transition: all 2s ease-in-out 0.1s;
+}
+.navItem {
+  line-height: 3rem;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.link {
+  text-decoration: none;
+  font-family: 'Microsoft Yahei';
+  color: #666;
+}
+.img {
+  height: 1.2rem;
+  margin-right: 0.2rem;
+  vertical-align: middle;
+}
+.text {
+  vertical-align: middle;
+}
+.active {
+  color: #099;
+}
+/* nav --end */
+
+/* dropdown --start*/
+.dropdown {
+  z-index: 10;
+}
+dropdown input:checked ~ ul {
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+dropdown {
+}
+dropdown label {
+  display: block;
+  height: 3rem;
+}
+dropdown ul li {
+  display: block;
+  width: 1000px;
+  background: #ECF0F1;
+  padding: 15px 20px;
+}
+
+dropdown label:hover, dropdown ul li:hover {
+  background: #1ABC9C;
+  color: white;
+  cursor: pointer;
+}
+
+dropdown label {
+  box-sizing: border-box;
+  height: 3rem;
+  color: #1ABC9C;
+  position: relative;
+  z-index: 2;
+}
+.icon {
+  padding-left: 1rem;
+  vertical-align: middle;
+  line-height: 3rem;
+}
+dropdown input {
+  display: none;
+}
+
+dropdown input ~ ul {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  top: -20px;
+  z-index: 1;
+}
+
+dropdown input:checked ~ ul {
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+
+.animate {
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -ms-transition: all .3s;
+  transition: all .3s;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Chrome and Safari */
+  -moz-backface-visibility: hidden;
+  /* Firefox */
+  -ms-backface-visibility: hidden;
+  /* Internet Explorer */
+}
+/* dropdown --end*/
+
+/* home --start */
 .home {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -31,4 +163,5 @@ body {
   list-style: none;
   border-bottom: 1px solid #BBB8AA;
 }
+/*home --end */
 
