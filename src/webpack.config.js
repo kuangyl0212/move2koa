@@ -2,9 +2,10 @@ var webpack = require('webpack');
 
 module.exports = {
     // 页面入口文件配置
-    entry : {
-        'javascripts': './js/index.js'
-    },
+    entry : [
+        'babel-polyfill',
+        './js/index.js'
+    ],
     // 入口文件输出配置
     output : {
         path : '../public/build/dist',
@@ -14,7 +15,13 @@ module.exports = {
         // 加载器配置
         loaders: [
         {
-            test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"
+            test: /\.jsx?$/, 
+            exclude: /node_modules/, 
+            loader: "babel-loader",
+            query: {
+                plugins: ['transform-runtime'],
+                presets: ['es2015', 'stage-0', 'react'],
+            }
         },
         {
             test: /\.css$/,
