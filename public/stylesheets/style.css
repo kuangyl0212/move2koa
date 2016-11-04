@@ -65,10 +65,11 @@ body {
   vertical-align: middle;
 }
 .text {
+  margin-left: 1rem;
   vertical-align: middle;
 }
 .active {
-  color: #099;
+  color: #1ABC9C;
 }
 /* nav --end */
 
@@ -87,11 +88,18 @@ dropdown label {
   display: block;
   height: 3rem;
 }
+dropdown .title{
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 1rem;
+  font-weight: normal;
+  font-size: 1rem;
+}
 dropdown ul li {
+  box-sizing: border-box;
   display: block;
-  width: 1000px;
+  width: 750px;
   background: #ECF0F1;
-  padding: 15px 20px;
 }
 
 dropdown label:hover, dropdown ul li:hover {
@@ -106,6 +114,9 @@ dropdown label {
   color: #1ABC9C;
   position: relative;
   z-index: 2;
+}
+.label {
+  display: block;
 }
 .icon {
   padding-left: 1rem;
@@ -124,6 +135,7 @@ dropdown input ~ ul {
   opacity: 0;
   top: -20px;
   z-index: 1;
+  box-shadow: 0 1px 5px #dee1e2;
 }
 
 dropdown input:checked ~ ul {

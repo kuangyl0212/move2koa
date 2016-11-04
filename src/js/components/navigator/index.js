@@ -29,15 +29,14 @@ export default class Navigator extends React.Component {
   }
   render() {
     let navView;
-    console.log('state---',this.state);
     if (this.state.windowWidth < 750) {
-      navView = <Dropdown/>
+      navView = <Dropdown width={this.state.windowWidth + 'px'} path={this.props.path}/>
     } else {
       navView = config.data.map((item,i)=>{
           return (
             <div key={i} className="navItem" >
               <Link className="link" activeClassName="active" to={item.link}>
-                {item.img && <img className="img" src={item.img} />}
+                <i className={"fa fa-"+config.getIconName(item.link)+" fa-lg icon"} aria-hidden="true"></i>
                 <span className="text">{item.name}</span>
               </Link>
             </div>

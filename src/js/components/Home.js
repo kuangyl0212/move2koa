@@ -13,7 +13,7 @@ class Home extends Component{
             posts: [],
         }
     }
-    componentWillMount () {
+    componentDidMount () {
         // 改ajax试试
         let successFun = (json)=>{
             // console.log('json---',json)

@@ -13,5 +13,15 @@ module.exports = {
       name:'用户中心',
       link:'profile'
     },
-  ]
+  ],
+  getIconName:(link) => {
+    switch(link) {
+      case 'home':
+        return 'home';
+      case 'post':
+        return 'edit';
+      case 'profile':
+        return 'user';
+    }
+  }
 }

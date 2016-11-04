@@ -78,7 +78,6 @@ var Post = React.createClass({
                     标题：
                     <input type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
                 </label>
-                // <UEditor ref="ueditor"/>
                 <button onClick={()=>this.submit()}>确认</button>
             </div>
         )
