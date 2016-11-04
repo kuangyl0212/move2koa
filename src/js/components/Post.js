@@ -1,12 +1,12 @@
 'use strict';
 var React = require('react');
 
-// import UEditor from './UEditor';
+import UEditor from './UEditor';
 
-import ReactMarkdown from 'react-markdown';
-import COntentEditable from 'react-contenteditable';
+// import ReactMarkdown from 'react-markdown';
+// import COntentEditable from 'react-contenteditable';
 
-var ReactQuill = require('react-quill');
+// var ReactQuill = require('react-quill');
 
 import $ from 'jquery';
 
@@ -34,7 +34,8 @@ var Post = React.createClass({
     },
     submit: function () {
         let title =this.state.title;
-        let content = this.state.content;
+        // let content = this.state.content;
+        let content = this.refs.editor.getContent();
         let successFun = (json)=>{
             console.log('json---',json);
             if (json == 'success') {
@@ -65,29 +66,29 @@ var Post = React.createClass({
             alert('标题或正文为空，请完善后提交！');
         }
     },
+    /* 代码备份 */
+    // <ReactQuill
+    //     theme="snow"
+    //     className="editor"
+    //     onChange={this.contentChange}
+    //     >
+    //     <ReactQuill.Toolbar key="toolbar"
+    //         className="toolbar"
+    //         ref="toolbar"
+    //         items={ReactQuill.Toolbar.defaultItems} />
+    //     <div key="editor"
+    //         ref="editor"
+    //         className="quill-contents"
+    //         dangerouslySetInnerHTML={{__html:this.state.content}}/>
+    // </ReactQuill>
     render: function () {
-        console.log('state---',ReactQuill);
+        console.log('state---',this.refs);
         // console.log('render-->Post',this.props)
         return (
             <div className="home">
-                <label className="titleLabel">
-                    标题：
-                    <input className="titleInput" type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
-                </label>
-                <ReactQuill
-                    theme="snow"
-                    className="editor"
-                    onChange={this.contentChange}
-                    >
-                    <ReactQuill.Toolbar key="toolbar"
-                        className="toolbar"
-                        ref="toolbar"
-                        items={ReactQuill.Toolbar.defaultItems} />
-                    <div key="editor"
-                        ref="editor"
-                        className="quill-contents"
-                        dangerouslySetInnerHTML={{__html:this.state.content}}/>
-                </ReactQuill>
+                <label className="titleLabel" htmlFor="title">标题:</label>
+                <input className="titleInput" id="title" type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
+                <UEditor className="ueditor" ref="editor"/>
                 <button className="submit" onClick={()=>this.submit()}>提交</button>
             </div>
         )

@@ -2,15 +2,11 @@ import React from 'react';
 
 export default class Loading extends React.Component {
     render() {
-        return <div style={styles.container}>
-            <img className="loadingGif" src="/images/loading.gif"/>
-        </div>
+        return(
+            <div className="loadingBox">
+                <i className="fa fa-cog fa-spin fa-4x fa-fw"></i>
+                <span className="sr-only">Loading...</span>
+            </div>
+            )
     }
 }
-
-var styles = {
-  container: {
-      width: '100%',
-      height: '100%',
-  }
-};

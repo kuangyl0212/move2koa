@@ -42,7 +42,8 @@ var UEditor = React.createClass({
                 'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
                 'indent', '|',
                 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-                'link','insertimage',  'map', 'emotion','|',
+                'insertcode', '|',
+                'link','unlink','insertimage', '|',
                 'horizontal', '|', 'date', 'time', '|', 
             ]],
             lang: 'zh-cn',
@@ -110,12 +111,12 @@ var UEditor = React.createClass({
         return '';
     },
     // 获得带格式的纯文本
-    getContent: function () {
-        if (this.editor) {
-            return this.editor.getContent();
-        }
-        return '';
-    },
+    // getContent: function () {
+    //     if (this.editor) {
+    //         return this.editor.getContent();
+    //     }
+    //     return '';
+    // },
     // 判断是否有内容
     hasContent: function () {
         if (this.editor) {

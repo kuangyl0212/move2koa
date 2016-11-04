@@ -48,7 +48,7 @@ router.post('/post',async (ctx,next)=>{
                 content: ctx.request.body.content,
                 createTime: ctx.request.body.createTime,
             });
-            await post.save().then(()=>{
+            await post.save(()=>{
                 ctx.body = 'success';
             });
         }
