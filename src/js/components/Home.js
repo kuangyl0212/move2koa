@@ -25,23 +25,6 @@ class Home extends Component{
         $.ajax({url: '/home',
             success: successFun,
         })
-        // fetch('/home',{
-        //     credential: "include",
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     method: 'get'
-        // })
-        //     .then((res)=>{return res.json()})
-        //     .then((json)=>{
-        //         // console.log('json---',json);
-        //         this.setState({
-        //             isFetching: false,
-        //             posts: json,
-        //         })
-        //     })
-        //     .catch((err)=>{console.log('error',err)});
     }
     render () {
         // console.log('state---',this.state.posts);
@@ -76,23 +59,5 @@ class Home extends Component{
         )
     }
 }
-
-// module.exports = Home;
-// 样式已经分离出去了
-// var styles = {
-//     container: {
-//         paddingLeft: '1rem',
-//         paddingRight: '1rem',
-//     },
-//     list: {
-//         margin: 0,
-//         padding: 0,
-//     },
-//     listItem: {
-//         height: '5rem',
-//         listStyle: 'none',
-//         borderBottom: '1px solid #BBB8AA'
-//     }
-// };
 
 export default Home;

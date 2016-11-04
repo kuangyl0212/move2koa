@@ -19,8 +19,13 @@ module.exports = {
         {
             test: /\.css$/,
             loader: 'style-loader!css-loader'
+        },
+        {
+            test: /\.json$/,
+            loader: "json-loader"
         }
-        ]
+        ],
+        noParse: /node_modules\/quill\/dist/
     },
     // 其他解决方案配置
     resolve: {

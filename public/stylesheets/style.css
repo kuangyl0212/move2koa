@@ -177,3 +177,37 @@ dropdown input:checked ~ ul {
 }
 /*home --end */
 
+/*post --start*/
+
+.titleLabel {
+  display: inline-block;
+  color: #1ABC9C;
+  margin: 1.5rem 0;
+}
+.titleInput {
+  border: 1px solid #1ABC9C;
+  border-radius: .1rem;
+}
+.titleInput:focus {
+  border-color: #D1CEBC;
+}
+.editor {
+  border: 1px solid #1ABC9C;
+  border-radius: .2rem;
+  width: 90%;
+  height: 25rem;
+  overflow: hidden;
+}
+.toolbar {
+  border-bottom: 1px solid #D1CEBC;
+}
+.submit {
+  padding: .1rem 2rem;
+  margin: 2rem 0;
+  color: #fff;
+  background-color: #1ABC9C;
+  border: none;
+  border-radius: .1rem;
+  cursor: pointer;
+}
+/*post --end*/

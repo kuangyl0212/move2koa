@@ -36,7 +36,7 @@ export default class Dropdown extends React.Component {
     let navView = config.data.map((item,i)=>{
           return (
             <Link key={i} className="link" activeClassName="active" to={item.link}>
-              <li className="animate" onClick={()=>{this.itemClick(item.name).bind(this)}}  style={{width: this.props.width ? this.props.width : "750px"}}>
+              <li className="animate" onClick={()=>{this.itemClick(item.name)}}  style={{width: this.props.width ? this.props.width : "750px"}}>
                 <i className={"fa fa-"+config.getIconName(item.link)+" fa-lg icon"} aria-hidden="true"></i>
                 <span className="text">{item.name}</span>
               </li>

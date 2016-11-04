@@ -1,6 +1,12 @@
+'use strict';
 var React = require('react');
 
 // import UEditor from './UEditor';
+
+import ReactMarkdown from 'react-markdown';
+import COntentEditable from 'react-contenteditable';
+
+var ReactQuill = require('react-quill');
 
 import $ from 'jquery';
 
@@ -21,9 +27,14 @@ var Post = React.createClass({
             title: value
         })
     },
+    contentChange(value) {
+        this.setState({
+            content: value
+        })
+    },
     submit: function () {
         let title =this.state.title;
-        let content = this.refs.ueditor.getContent();
+        let content = this.state.content;
         let successFun = (json)=>{
             console.log('json---',json);
             if (json == 'success') {
@@ -49,49 +60,38 @@ var Post = React.createClass({
                 data: post,
                 success: successFun
             })
-            // let postData = {
-            //     credential: "include",
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     method: "POST",
-            //     body: JSON.stringify(post)
-            // };
-            // fetch('/post',postData).then(function (res) {
-            //     // console.log('res---',res);
-            //     return res.json();
-            // }).then((json)=>{
-            //     // console.log('json---',json);
-            // })
-            //     .catch((err)=>{console.log('error',err)});
         } else {
             // todo 写一个弹窗组件替代alert
             alert('标题或正文为空，请完善后提交！');
         }
     },
     render: function () {
-        // console.log('render-->Post',this.props);
+        console.log('state---',ReactQuill);
+        // console.log('render-->Post',this.props)
         return (
-            <div style={styles.contentBox}>
-                <label>
+            <div className="home">
+                <label className="titleLabel">
                     标题：
-                    <input type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
+                    <input className="titleInput" type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
                 </label>
-                <button onClick={()=>this.submit()}>确认</button>
+                <ReactQuill
+                    theme="snow"
+                    className="editor"
+                    onChange={this.contentChange}
+                    >
+                    <ReactQuill.Toolbar key="toolbar"
+                        className="toolbar"
+                        ref="toolbar"
+                        items={ReactQuill.Toolbar.defaultItems} />
+                    <div key="editor"
+                        ref="editor"
+                        className="quill-contents"
+                        dangerouslySetInnerHTML={{__html:this.state.content}}/>
+                </ReactQuill>
+                <button className="submit" onClick={()=>this.submit()}>提交</button>
             </div>
         )
     }
 });
-
-var styles = {
-  editor: {
-      padding: '1.5rem',
-      borderRadius: '1rem',
-      background: '#eee',
-      width: '80%',
-      margin: '0 auto'
-  }
-};
 
 module.exports = Post;
