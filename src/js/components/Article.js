@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Loading from './Loading';
 import $ from 'jquery';
+import ContentEditable from 'react-contenteditable';
 
 var Link = require('react-router').Link;
 
@@ -70,11 +71,16 @@ class Article extends Component{
             author = this.state.article.author;
         } catch (err) {}
         return (
-            <div style={styles.container}>
+            <div style={styles.container} className="home article">
                 <h2>{this.state.article.title}</h2>
                 <p>{time}</p>
                 <p>{author}</p>
                 <div dangerouslySetInnerHTML={createMarkup(this.state.article.content)}></div>
+                <div className="comment-form">
+                    <label>评论:</label>
+                    <ContentEditable className="comment-editor"/>
+                    <button className="submit comment">提交</button>
+                </div>
             </div>
         )
     }
@@ -87,6 +93,7 @@ var styles = {
         paddingLeft: '1rem',
         paddingRight: '1rem',
         overflow: 'hidden',
+        background: '#fff',
     },
 };
 

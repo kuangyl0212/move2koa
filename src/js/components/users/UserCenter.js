@@ -20,7 +20,7 @@ export default class UserCenter extends Component {
     return (
       <div>
         <div>用户名： {this.props.user.user_name} </div>
-        <button onClick={this._clickHandler.bind(this)}>注销</button>
+        <button className="submit logout" onClick={this._clickHandler.bind(this)}>注销</button>
       </div>
     )
   }

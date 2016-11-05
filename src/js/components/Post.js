@@ -11,6 +11,8 @@ import UEditor from './UEditor';
 
 import $ from 'jquery';
 
+const mobileWidth = require('../common/config').mobileWidth;
+
 var Post = React.createClass({
     getInitialState: function () {
         return ({
@@ -25,7 +27,7 @@ var Post = React.createClass({
      mixins: [ Lifecycle ],
     // 离开前确认
     routerWillLeave(nextLocation) {
-        if (!this.state.isSaved)
+        if (!this.state.isSaved && this.state.windowWidth > mobileWidth)
         return 'Your work is not saved! Are you sure you want to leave?'
     },
     handleResize(e) {
@@ -33,6 +35,24 @@ var Post = React.createClass({
     },
     componentDidMount() {
         window.addEventListener('resize', this.handleResize.bind(this));
+        $.ajax({
+            url: '/users/check',
+            type: 'get',
+            success: (json)=>{
+                console.log('json---',json);
+                if (json.code != 1) {
+                    alert('尚未登录？');
+                    this.setState({
+                        isSaved: true,
+                    });
+                    hashHistory.push('/profile');
+                } else {
+                    this.setState({
+                        user: json.user,
+                    });
+                }
+            }
+        })
     },
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize.bind(this));
@@ -58,7 +78,8 @@ var Post = React.createClass({
             url: '/users/check',
             type: 'get',
             success: (json)=>{
-                if (json != 1) {
+                console.log('json---',json);
+                if (json.code != 1) {
                     alert('尚未登录？');
                     this.setState({
                         isSaved: true,
@@ -99,6 +120,7 @@ var Post = React.createClass({
             let post = {
                 title: title,
                 content: content,
+                author: this.state.user.user_name,
                 createTime: new Date(),
             };
             $.ajax({
@@ -128,17 +150,25 @@ var Post = React.createClass({
     //         dangerouslySetInnerHTML={{__html:this.state.content}}/>
     // </ReactQuill>
     render: function () {
-
-        console.log('state---',this.refs);
+        // console.log('state---',this.refs);
         // console.log('render-->Post',this.props)
-        return (
-            <div className="home">
+        if (this.state.windowWidth > mobileWidth) {
+            return (
+            <div className="home post">
                 <label className="titleLabel" htmlFor="title">标题:</label>
                 <input className="titleInput" id="title" type="text" value={this.state.title} onChange={(event)=>this.titleChange(event)}/>
                 <UEditor className="ueditor" ref="editor"/>
                 <button className="submit" onClick={()=>this.submit()}>提交</button>
             </div>
         )
+        } else {
+            console.log('mobile---');
+            return (
+                <div className="home">
+                    <p>编辑功能需要更宽的屏幕</p>
+                </div>
+            )
+        }
     }
 });
 

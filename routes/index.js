@@ -16,7 +16,7 @@ router.get('/home', async (ctx, next)=>{
         await Post
         .find()
         // 首页只获取标题 这样做是因为 如果获取全部内容的话 不排除内容量十分巨大 造成阻塞
-        .select('title createTime')
+        .select('title createTime author')
         // 按时间排序
         .sort('-createTime')
         .exec(function (err, posts) {
@@ -39,20 +39,21 @@ router.get('/article',async (ctx,next)=>{
 // 发表文章
 router.post('/post',async (ctx,next)=>{
     console.log('POST /post',ctx.request.body);
-    await Post.findOne({title: ctx.request.body.title},async (err,post)=>{
+    await Post.findOne({title: ctx.request.body.title},(err,post)=>{
         // console.log('11111',err,post)
         if (err) ctx.body = 'err';
         if (post) {ctx.body = 'title_exist';} else {
             var post = new Post({
                 title: ctx.request.body.title,
                 content: ctx.request.body.content,
+                author: ctx.request.body.author,
                 createTime: ctx.request.body.createTime,
             });
-            await post.save(()=>{
-                ctx.body = 'success';
-            });
+            post.save();
+            ctx.body = 'success';
         }
     })
+    console.log('body---',ctx.body)
     await next()
 });
 
@@ -68,9 +69,13 @@ router.get('/users/check', async(ctx, next)=> {
                     code: 1,
                     user: user
                 }
-            } else ctx.body = 0;
+            } else ctx.body =  {
+                    code: 0,
+                };
         })
-    } else ctx.body = 0;
+    } else ctx.body = {
+                    code: 0,
+                };
     await next();
 });
 

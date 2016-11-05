@@ -37,11 +37,11 @@ class Home extends Component{
                 author = obj.author;
             } catch (err) {}
             return (
-                <li key={obj._id} className="listItem">
+                <li key={obj._id} className="listItem article">
                     <Link to={'/article/'+obj._id} >
-                        <h3>{obj.title}</h3>
-                        <span>{time}</span>
-                        <span>{author}</span>
+                        <h3 className="link title">{obj.title}</h3>
+                        <span className="link create-time">{time}</span>
+                        <span className="link author">{author}</span>
                     </Link>
                 </li>
             );
@@ -51,7 +51,7 @@ class Home extends Component{
             return <Loading />
         }
         return (
-            <div className="home" >
+            <div className="home article-list" >
                 <ul className="list">
                     {articles}
                 </ul>

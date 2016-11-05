@@ -1,10 +1,12 @@
 import React from 'react';
 import config from './config';
 import {Link} from 'react-router';
+const mobileWidth = require('../../common/config').mobileWidth;
 
 export default class Dropdown extends React.Component {
   constructor(props) {
     super(props);
+    // console.log('mobile====',mobileWidth);
     this.state = {
       show: false,
       label: '',
@@ -36,7 +38,7 @@ export default class Dropdown extends React.Component {
     let navView = config.data.map((item,i)=>{
           return (
             <Link key={i} className="link" activeClassName="active" to={item.link}>
-              <li className="animate" onClick={()=>{this.itemClick(item.name)}}  style={{width: this.props.width ? this.props.width : "750px"}}>
+              <li className="animate" onClick={()=>{this.itemClick(item.name)}}  style={{width: this.props.width ? this.props.width : mobileWidth}}>
                 <i className={"fa fa-"+config.getIconName(item.link)+" fa-lg icon"} aria-hidden="true"></i>
                 <span className="text">{item.name}</span>
               </li>
@@ -45,7 +47,7 @@ export default class Dropdown extends React.Component {
         })
     // console.log(111)
     return (
-      <dropdown className="dropdown" id="dropdown1" style={{width: this.props.width ? this.props.width : "750px"}}>
+      <dropdown className="dropdown" id="dropdown1" style={{width: this.props.width ? this.props.width : mobileWidth}}>
         <input type="checkbox" ref="checkbox1" checked={this.state.show ? true : false}/>
         <label className="animate label" htmlFor="dropdown1" onClick={this.clickHandler.bind(this)}>
           <i className={this.state.show ? "fa fa-close fa-lg icon" : "fa fa-navicon fa-lg icon"} aria-hidden="true" ref="icon"></i>

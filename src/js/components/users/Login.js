@@ -142,26 +142,19 @@ export default class Login extends Component {
     }
     render() {
         return (
-                <div style={styles.modal}>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>邮箱：</div>
-                        <input type="text" placeholder="email"
-                        value={this.state.email}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.email_msg}</div>
-                    </label>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>密码：</div>
-                        <input type="password" placeholder="password"
-                        value={this.state.password}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.pass_msg}</div>
-                    </label>
-                    <button onClick={this._submit.bind(this)}>登录</button>
-                    <div style={styles.msg}>{this.state.login_msg}</div>
-                </div>
+            <div className="login-form">
+                <input className="input" type="text" placeholder="email"
+                value={this.state.email}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.email_msg}</div>
+                <input className="input" type="password" placeholder="password"
+                value={this.state.password}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.pass_msg}</div>
+                <button className="submit login" onClick={this._submit.bind(this)}>登录</button>
+                <div className="msg">{this.state.login_msg}</div>
+            </div>
         )
-
     }
 }
 
@@ -177,16 +170,6 @@ var styles = {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    modal: {
-        width: '30rem',
-        height: '18rem',
-        backgroundColor: '#fff',
-        borderRadius: '1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     labels: {
         display: 'flex',
         width: '80%',
@@ -196,10 +179,4 @@ var styles = {
     tag:{
         width: '30%',
     },
-    msg: {
-        width: '30%',
-        marginLeft: '0.1rem',
-        fontSize: '0.8rem',
-        color: '#f00',
-    }
 };

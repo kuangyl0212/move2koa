@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 import Dropdown from './Dropdown';
 import config from './config';
+const mobileWidth = require('../../common/config').mobileWidth;
 
 /* 
  * 这是导航栏组件 
@@ -28,8 +29,9 @@ export default class Navigator extends React.Component {
     window.removeEventListener('resize', this.handleResize.bind(this));
   }
   render() {
+    // console.log('mobileWidth---',mobileWidth)
     let navView;
-    if (this.state.windowWidth < 750) {
+    if (this.state.windowWidth < mobileWidth) {
       navView = <Dropdown width={this.state.windowWidth + 'px'} path={this.props.path}/>
     } else {
       navView = config.data.map((item,i)=>{
@@ -46,7 +48,9 @@ export default class Navigator extends React.Component {
     return (
       <div className="placeHolder">
         <nav className="navContainer">
+        <div className="home">
           {navView}
+        </div>
         </nav>
       </div>
     )

@@ -10,7 +10,7 @@ var UEditor = React.createClass({
     getDefaultProps: function () {
         return {
             disabled: false,
-            height: 300,
+            height: 400,
             content: '',
             id: 'editor'
         };

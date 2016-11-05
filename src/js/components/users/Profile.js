@@ -56,7 +56,7 @@ export default class Profile extends Component {
             )
         }
         return (
-            <div>
+            <div className="home profile">
                 {sView}
             </div>
             )
