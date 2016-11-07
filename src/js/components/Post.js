@@ -39,7 +39,7 @@ var Post = React.createClass({
             url: '/users/check',
             type: 'get',
             success: (json)=>{
-                console.log('json---',json);
+                // console.log('json---',json);
                 if (json.code != 1) {
                     alert('尚未登录？');
                     this.setState({
@@ -78,7 +78,7 @@ var Post = React.createClass({
             url: '/users/check',
             type: 'get',
             success: (json)=>{
-                console.log('json---',json);
+                // console.log('json---',json);
                 if (json.code != 1) {
                     alert('尚未登录？');
                     this.setState({
@@ -101,7 +101,7 @@ var Post = React.createClass({
         // let content = this.state.content;
         let content = this.refs.editor.getContent();
         let successFun = (json)=>{
-            console.log('json---',json);
+            // console.log('json---',json);
             if (json == 'success') {
                 alert('成功！跳转到首页')
                 this.setState({
