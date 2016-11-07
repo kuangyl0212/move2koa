@@ -1,10 +1,10 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import Navigator from './components/navigator';
-var Navi = require('./components/Navi');
+// var Navi = require('./components/Navi');
 
 
 // var Home = require('./components/Home');
@@ -16,7 +16,8 @@ import Home from './components/Home';
 // import Login from './components/users/Login';
 import Profile from './components/users/Profile';
 
-var Post = require('./components/Post');
+// var Post = require('./components/Post');
+import Post from './components/Post';
 
 import Article from './components/Article';
 

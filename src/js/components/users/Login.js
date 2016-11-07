@@ -16,6 +16,9 @@ export default class Login extends Component {
             login_msg: '',
         };
     }
+    static contextTypes = {
+        router: React.PropTypes.object
+    }
     _changeHandler (event) {
         let name = event.target.placeholder;
         let value = event.target.value;
@@ -46,9 +49,10 @@ export default class Login extends Component {
                         // 这是注册成功的路径
                         // 登录成功存入token（mongodb自动生成的_id） 下次验证 或者 获取用户信息的时候用
                         // localStorage.setItem('token',json.token);
-                        setTimeout(()=>{this.props.history.push('/home')},1000);
+                        // setTimeout(()=>{this.props.history.push('/home')},1000);
+                        setTimeout(()=>{this.context.router.goBack()},1000);
                         this.setState({
-                            login_msg: '登录成功，跳到首页！'
+                            login_msg: '登录成功，跳转到之前的页面！'
                         });
                         break;
                     case "not_exist":
@@ -141,13 +145,15 @@ export default class Login extends Component {
         }
     }
     render() {
+        // console.log('context---',this.context);
         return (
             <div className="login-form">
-                <input className="input" type="text" placeholder="email"
+                <legend>登录</legend>
+                <input className="input" type="text" placeholder="E-mail"
                 value={this.state.email}
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.email_msg}</div>
-                <input className="input" type="password" placeholder="password"
+                <input className="input" type="password" placeholder="Password"
                 value={this.state.password}
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.pass_msg}</div>
@@ -157,26 +163,3 @@ export default class Login extends Component {
         )
     }
 }
-
-var styles = {
-    mask: {
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    labels: {
-        display: 'flex',
-        width: '80%',
-        marginBottom: '1rem',
-        justifyContent: 'space-between',
-    },
-    tag:{
-        width: '30%',
-    },
-};

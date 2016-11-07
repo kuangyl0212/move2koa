@@ -1,6 +1,6 @@
 'use strict';
-var React = require('react');
-import { Lifecycle, hashHistory } from 'react-router'
+// var React = require('react');
+import React from 'react';
 
 import UEditor from './UEditor';
 
@@ -13,26 +13,35 @@ import $ from 'jquery';
 
 const mobileWidth = require('../common/config').mobileWidth;
 
-var Post = React.createClass({
-    getInitialState: function () {
-        return ({
-            title: '',
+export default class Post extends React.Component{
+    constructor (props) {
+        super(props)
+        this.state = {
+             title: '',
             content: '',
             createTime:'',
             windowWidth: window.innerWidth,
             user: {},
             isSaved: false,
-        })
-    },
-     mixins: [ Lifecycle ],
-    // 离开前确认
-    routerWillLeave(nextLocation) {
-        if (!this.state.isSaved && this.state.windowWidth > mobileWidth)
-        return 'Your work is not saved! Are you sure you want to leave?'
-    },
+        }
+    }
+    
+    // 需要定义context类型才能使用
+    static contextTypes = {
+        router: React.PropTypes.object
+    }
+    //  mixins: [ Lifecycle ],
+    // // 离开前确认
+    // routerWillLeave(nextLocation) {
+    //     if (!this.state.isSaved && this.state.windowWidth > mobileWidth)
+    //     return 'Your work is not saved! Are you sure you want to leave?'
+    // },
+    componentWillMount() {
+        // console.log('context---1-',this.context);
+    }
     handleResize(e) {
         this.setState({windowWidth: window.innerWidth});
-    },
+    }
     componentDidMount() {
         window.addEventListener('resize', this.handleResize.bind(this));
         $.ajax({
@@ -45,7 +54,8 @@ var Post = React.createClass({
                     this.setState({
                         isSaved: true,
                     });
-                    hashHistory.push('/profile');
+                    // hashHistory.push('/profile');
+                    this.context.router.push('/profile');
                 } else {
                     this.setState({
                         user: json.user,
@@ -53,25 +63,25 @@ var Post = React.createClass({
                 }
             }
         })
-    },
+    }
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize.bind(this));
-    },
-    titleChange: function (event) {
+    }
+    titleChange(event) {
         // console.log('event---',event.target.value,this.state);
         let value = event.target.value;
         this.setState({
             title: value
         })
-    },
+    }
     contentChange(value) {
         this.setState({
             content: value
         })
-    },
+    }
     loginCheck() {
 
-    },
+    }
     async submit(){
         let checkPromise = new Promise((resolve,reject)=>{
             $.ajax({
@@ -84,7 +94,8 @@ var Post = React.createClass({
                     this.setState({
                         isSaved: true,
                     });
-                    hashHistory.push('/profile');
+                    // hashHistory.push('/profile');
+                    this.context.router.push('./profile');
                     resolve(false);
                 } else {
                     this.setState({
@@ -107,7 +118,8 @@ var Post = React.createClass({
                 this.setState({
                     isSaved: true,
                 })
-                this.props.history.push('/home');
+                // this.props.history.push('/home');
+                this.context.router.goBack();
             }
             if (json == 'title_exist') {
                 alert('标题已经存在，换一个试试？')
@@ -133,7 +145,7 @@ var Post = React.createClass({
             // todo 写一个弹窗组件替代alert
             alert('标题或正文为空，请完善后提交！');
         }
-    },
+    }
     /* 代码备份 */
     // <ReactQuill
     //     theme="snow"
@@ -149,9 +161,10 @@ var Post = React.createClass({
     //         className="quill-contents"
     //         dangerouslySetInnerHTML={{__html:this.state.content}}/>
     // </ReactQuill>
-    render: function () {
+    render () {
         // console.log('state---',this.refs);
-        // console.log('render-->Post',this.props)
+        // console.log('render-->Post',this.props);
+        console.log('contex---',this.context);
         if (this.state.windowWidth > mobileWidth) {
             return (
             <div className="home post">
@@ -170,6 +183,4 @@ var Post = React.createClass({
             )
         }
     }
-});
-
-module.exports = Post;
+};

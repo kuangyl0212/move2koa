@@ -3,7 +3,9 @@ import Loading from './Loading';
 // import ajax from '../common/ajax';
 import $ from 'jquery'
 
-var Link = require('react-router').Link;
+// var Link = require('react-router').Link;
+import {Link} from 'react-router';
+import Footer from './Footer';
 
 class Home extends Component{
     constructor(props) {
@@ -55,6 +57,7 @@ class Home extends Component{
                 <ul className="list">
                     {articles}
                 </ul>
+                <Footer />
             </div>
         )
     }

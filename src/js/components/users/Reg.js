@@ -20,6 +20,10 @@ export default class Reg extends Component {
             reg_msg: '',
         };
     }
+    // 需要定义context类型才能使用
+    static contextTypes = {
+        router: React.PropTypes.object
+    }
     _changeHandler (event) {
         let name = event.target.placeholder;
         let value = event.target.value;
@@ -65,7 +69,8 @@ export default class Reg extends Component {
                     case "success":
                         // 这是注册成功的路径
                         setTimeout(()=>{
-                            this.props.history.push('/login');
+                            // this.props.history.push('/login');
+                            this.context.router.goBack();
                         },1000);
                         this.setState({
                             reg_msg: '注册成功，即将跳至登录页！'
@@ -183,78 +188,67 @@ export default class Reg extends Component {
 
     render() {
         return (
-                <div style={styles.modal}>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>用户名：</div>
-                        <input type="text" placeholder="user name"
-                        value={this.state.user_name}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.user_msg}</div>
-                    </label>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>邮箱：</div>
-                        <input type="text" placeholder="email"
-                        value={this.state.email}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.email_msg}</div>
-                    </label>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>密码：</div>
-                        <input type="password" placeholder="password"
-                        value={this.state.password}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.pass_msg}</div>
-                    </label>
-                    <label style={styles.labels}>
-                        <div style={styles.tag}>确认密码：</div>
-                        <input type="password" placeholder="confirm password"
-                        value={this.state.confirm_password}
-                        onChange={this._changeHandler.bind(this)}/>
-                        <div style={styles.msg}>{this.state.con_msg}</div>
-                    </label>
-                    <button onClick={this._submit.bind(this)}>注册</button>
-                    <div style={styles.msg}>{this.state.reg_msg}</div>
-                </div>
+            <div className="login-form reg">
+                <legend>注册</legend>
+                <input className="input" type="text" placeholder="User Name (more than 6 character)"
+                value={this.state.user_name}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.user_msg}</div>
+                <input className="input" type="text" placeholder="E-mail"
+                value={this.state.email}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.email_msg}</div>
+                <input className="input" type="password" placeholder="Password (more than 6 character)"
+                value={this.state.password}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.pass_msg}</div>
+                <input className="input" type="password" placeholder="Confirm Password"
+                value={this.state.confirm_password}
+                onChange={this._changeHandler.bind(this)}/>
+                <div className="msg">{this.state.con_msg}</div>
+                <button  className="submit login" onClick={this._submit.bind(this)}>注册</button>
+                <div className="msg">{this.state.reg_msg}</div>
+            </div>
         )
 
     }
 }
 
-var styles = {
-    mask: {
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modal: {
-        width: '30rem',
-        height: '18rem',
-        backgroundColor: '#fff',
-        borderRadius: '1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    labels: {
-        display: 'flex',
-        width: '80%',
-        marginBottom: '1rem',
-        justifyContent: 'space-between',
-    },
-    tag:{
-        width: '30%',
-    },
-    msg: {
-        width: '30%',
-        marginLeft: '0.1rem',
-        fontSize: '0.8rem',
-        color: '#f00',
-    }
-};
+// var styles = {
+//     mask: {
+//         position: 'fixed',
+//         left: 0,
+//         top: 0,
+//         width: '100%',
+//         height: '100%',
+//         backgroundColor: 'rgba(0,0,0,0.1)',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//     },
+//     modal: {
+//         width: '30rem',
+//         height: '18rem',
+//         backgroundColor: '#fff',
+//         borderRadius: '1rem',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//     },
+//     labels: {
+//         display: 'flex',
+//         width: '80%',
+//         marginBottom: '1rem',
+//         justifyContent: 'space-between',
+//     },
+//     tag:{
+//         width: '30%',
+//     },
+//     msg: {
+//         width: '30%',
+//         marginLeft: '0.1rem',
+//         fontSize: '0.8rem',
+//         color: '#f00',
+//     }
+// };

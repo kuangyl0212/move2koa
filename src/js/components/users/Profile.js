@@ -17,6 +17,11 @@ export default class Profile extends Component {
             user: {}
         }
     }
+
+    // 需要定义context类型才能使用
+    static contextTypes = {
+        router: React.PropTypes.object
+    }
     componentWillMount(){
         let successFun = (json)=> {
             // console.log('check')
@@ -41,17 +46,22 @@ export default class Profile extends Component {
         })
     }
     render() {
+        // console.log('context--',this.context)
         let sView;
-        let history = this.props.history;
+        // let history = this.props.history;
         if (this.state.isFetching) return sView = <Loading />;
         if (this.state.ifLogin) {
             // 如果已经登录显示用户中心
             sView = <UserCenter user={this.state.user} logout={this._logoutHandler.bind(this)}/>
         } else {
             sView = (
-            <div>
-                <Login history={history}/>
-                <Reg history={history}/>
+            <div className="login-reg">
+                <Login/>
+                <div className="or-box">
+                    <div className="string"></div>
+                    <span>or</span>
+                </div>
+                <Reg/>
             </div>
             )
         }

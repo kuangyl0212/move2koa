@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #D1CEBC;
+  background: #ECF0F1;
 }
 
 .loadingBox {
@@ -43,6 +43,9 @@ body {
   }
 }
 @media screen and (max-width: 600px) {
+  .home {
+    min-width: 320px;
+  }
   .navContainer {
     box-shadow: none;
   }
@@ -154,8 +157,10 @@ dropdown input ~ ul {
 
 /* home --start */
 .home.article-list {
+  box-sizing: border-box;
   padding-left: .6rem;
   padding-right: .6rem;
+  min-height: 900px;
 }
 @media screen and (min-width: 900px) {
   .home {
@@ -192,6 +197,7 @@ dropdown input ~ ul {
 }
 
 .listItem.article {
+  box-sizing: border-box;
   background: #fff;
   box-shadow: 0 1px 5px rgba(6,6,6,0.4);
   padding: 1rem;
@@ -288,16 +294,25 @@ dropdown input ~ ul {
 .home.profile {
   box-sizing: border-box; 
   background: #fff;
-  min-height: 50rem;
+  /*min-height: 50rem;*/
   padding: 2rem;
+}
+.login-reg {
+  text-align: center;
 }
 /*profile --end*/
 
 /*login --start*/
 .login-form {
+  width: 100%;
+  margin: 0;
   align-items: center;
   display: flex;
   flex-direction: column;
+}
+.login-form legend {
+  color: #1ABC9C;
+  margin: 1rem;
 }
 .submit.login {
   margin: .4rem 0;
@@ -307,8 +322,49 @@ dropdown input ~ ul {
   height: 1.5rem;
 }
 .login-form .input {
+  width: 270px;
   padding: .4rem;
   border: 1px solid #1ABC9C;
   border-radius: .2rem;
 }
+.or-box {
+  position: relative;
+}
+.or-box span {
+  padding: .4rem;
+  color: #1ABC9C;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  vertical-align: middle;
+  background: #fff;
+  font-size: 18px;
+}
+.string {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  width: 20rem;
+  height: 1px;
+  background: #1ABC9C;
+}
+
 /*login --end*/
+
+/*footer --start*/
+footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #D1CEBC;
+  text-align: center;
+}
+footer a {
+  font-size: 10px;
+  color: #999;
+  text-decoration: none;
+}
+
+/*footer --end*/
