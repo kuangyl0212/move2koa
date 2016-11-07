@@ -8,7 +8,7 @@ export default class UserCenter extends Component {
     super(props);
   }
   _clickHandler(){
-    console.log('props---',this.props,this)
+    // console.log('props---',this.props,this)
     let _logout = this.props.logout;
     $.ajax({
       url: 'users/logout',
