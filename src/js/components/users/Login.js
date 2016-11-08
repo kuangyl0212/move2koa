@@ -20,7 +20,7 @@ export default class Login extends Component {
         router: React.PropTypes.object
     }
     _changeHandler (event) {
-        let name = event.target.placeholder;
+        let name = event.target.name;
         let value = event.target.value;
         switch(name) {
             case 'email':
@@ -149,11 +149,11 @@ export default class Login extends Component {
         return (
             <div className="login-form">
                 <legend>登录</legend>
-                <input className="input" type="text" placeholder="E-mail"
+                <input className="input" type="text" placeholder="E-mail" name="email"
                 value={this.state.email}
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.email_msg}</div>
-                <input className="input" type="password" placeholder="Password"
+                <input className="input" type="password" placeholder="Password" name="password"
                 value={this.state.password}
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.pass_msg}</div>

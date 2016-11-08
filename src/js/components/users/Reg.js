@@ -25,10 +25,10 @@ export default class Reg extends Component {
         router: React.PropTypes.object
     }
     _changeHandler (event) {
-        let name = event.target.placeholder;
+        let name = event.target.name;
         let value = event.target.value;
         switch(name) {
-            case 'user name':
+            case 'user_name':
                 this.state.user_msg != '' && this.setState({
                     user_msg: '',
                 });
@@ -52,7 +52,7 @@ export default class Reg extends Component {
                     password: value,
                 });
                 break;
-            case 'confirm password':
+            case 'confirm_password':
                 this.state.con_msg != '' && this.setState({
                     con_msg: '',
                 });
@@ -187,23 +187,24 @@ export default class Reg extends Component {
     }
 
     render() {
+        // console.log('state---reg',this.state);
         return (
             <div className="login-form reg">
                 <legend>注册</legend>
                 <input className="input" type="text" placeholder="User Name (more than 6 character)"
-                value={this.state.user_name}
+                value={this.state.user_name} name="user_name"
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.user_msg}</div>
                 <input className="input" type="text" placeholder="E-mail"
-                value={this.state.email}
+                value={this.state.email} name="email"
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.email_msg}</div>
                 <input className="input" type="password" placeholder="Password (more than 6 character)"
-                value={this.state.password}
+                value={this.state.password} name="password"
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.pass_msg}</div>
                 <input className="input" type="password" placeholder="Confirm Password"
-                value={this.state.confirm_password}
+                value={this.state.confirm_password} name="confirm_password"
                 onChange={this._changeHandler.bind(this)}/>
                 <div className="msg">{this.state.con_msg}</div>
                 <button  className="submit login" onClick={this._submit.bind(this)}>注册</button>
