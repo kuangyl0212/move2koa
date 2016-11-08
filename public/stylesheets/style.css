@@ -3,6 +3,9 @@ body {
   padding: 0;
   background: #ECF0F1;
 }
+a {
+  text-decoration: none;
+}
 
 .loadingBox {
   position: absolute;
@@ -195,9 +198,12 @@ dropdown input ~ ul {
   overflow: hidden;
   white-space: nowrap;
 }
-
+.link.article {
+  text-decoration: none;
+}
 .listItem.article {
   box-sizing: border-box;
+  border-radius: .3rem;
   background: #fff;
   box-shadow: 0 1px 5px rgba(6,6,6,0.4);
   padding: 1rem;

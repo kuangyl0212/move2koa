@@ -40,7 +40,7 @@ class Home extends Component{
             } catch (err) {}
             return (
                 <li key={obj._id} className="listItem article">
-                    <Link to={'/article/'+obj._id} >
+                    <Link to={'/article/'+obj._id} className="link article">
                         <h3 className="link title">{obj.title}</h3>
                         <span className="link create-time">{time}</span>
                         <span className="link author">{author}</span>
