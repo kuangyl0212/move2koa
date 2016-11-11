@@ -36,14 +36,14 @@ class Home extends Component{
             let time,author;
             try {
                 time = obj.createTime.substr(0,10);
-                author = obj.author;
+                author = obj.author.user_name;
             } catch (err) {}
             return (
                 <li key={obj._id} className="listItem article">
                     <Link to={'/article/'+obj._id} className="link article">
                         <h3 className="link title">{obj.title}</h3>
-                        <span className="link create-time">{time}</span>
                         <span className="link author">{author}</span>
+                        <span className="link create-time">{time}</span>
                     </Link>
                 </li>
             );

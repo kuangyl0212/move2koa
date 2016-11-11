@@ -3,6 +3,7 @@
 const router = new require('koa-router')();
 const Post = require('../models/Post');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 
 const findUser = async (option)=>{
     let result;
@@ -15,6 +16,10 @@ const findUser = async (option)=>{
 router.get('/home', async (ctx, next)=>{
         await Post
         .find()
+        .populate({
+            path: 'author',
+            select: 'user_name',
+        })
         // 首页只获取标题 这样做是因为 如果获取全部内容的话 不排除内容量十分巨大 造成阻塞
         .select('title createTime author')
         // 按时间排序
@@ -29,40 +34,110 @@ router.get('/home', async (ctx, next)=>{
 
 router.get('/article',async (ctx,next)=>{
     var id = ctx.query.id;
-    await Post.findOne({_id: id},function (err, post) {
-        if (err) return console.error(err);
-        ctx.body = post;
-    });
+    await Post.findById(id)
+        .populate([{
+            path: 'author',
+            select: '_id user_name email',
+        },{
+            path: 'comments',
+            sort: '-createTime',
+            populate:{
+                path: 'by',
+                select: '_id user_name email',
+            }
+        }
+        ])
+        .exec(function (err, post) {
+            console.log('post---',post.comments);
+            if (err) return console.error(err);
+            ctx.body = post;
+        });
     await next();
 });
 
 // 发表文章
 router.post('/post',async (ctx,next)=>{
     console.log('POST /post',ctx.request.body);
+    let user_promise = new Promise((resolve, reject)=>{
+        User.findById(ctx.session.uid, (err,doc)=>{
+            console.log('pppp',doc,err)
+            if (err) {reject('err')}
+            if (doc) {
+                resolve(doc);
+            } else {
+                reject('not_exist');
+            }
+        })
+    });
+    let user = await user_promise;
+    console.log('user---',user);
     await Post.findOne({title: ctx.request.body.title},(err,post)=>{
         // console.log('11111',err,post)
-        if (err) ctx.body = 'err';
-        if (post) {ctx.body = 'title_exist';} else {
+        if (err) ctx.body = {msg:'err'};
+        if (post) {ctx.body = {msg:'title_exist'};} else {
             var post = new Post({
                 title: ctx.request.body.title,
                 content: ctx.request.body.content,
-                author: ctx.request.body.author,
-                createTime: ctx.request.body.createTime,
+                author: ctx.session.uid,
+                createTime: new Date(),
             });
             post.save();
-            ctx.body = 'success';
+            user.posts.push(post._id);
+            user.save();
+            ctx.body = {msg:'success',
+                article_id: post._id,    
+            };
         }
     })
     console.log('body---',ctx.body)
     await next()
 });
 
+// 发表评论 
+router.post('/comment',async (ctx,next)=>{
+    console.log('POST /comment',ctx.request.body);
+    let article_id = ctx.request.body.article_id;
+    let user_promise = new Promise((resolve, reject)=>{
+        User.findById(ctx.session.uid, (err,doc)=>{
+            console.log('pppp',doc,err)
+            if (err) {reject('err')}
+            if (doc) {
+                resolve(doc);
+            } else {
+                reject('not_exist');
+            }
+        })
+    });
+    let user = await user_promise;
+    await Post.findById(article_id,(err,post)=>{
+        // console.log('11111',err,post)
+        if (err) ctx.body = {msg:'err'};
+        if (post) {
+            var comment = new Comment({
+                content: ctx.request.body.content,
+                by: ctx.session.uid,
+                createTime: new Date(),
+                post: article_id,
+            });
+            post.comments.push(comment._id);
+            user.comments.push(comment._id);
+            comment.save();
+            post.save();
+            user.save();
+            ctx.body = {msg:'success',comment: comment};
+        } else {ctx.body = {msg:'post_not_exist'}}
+    })
+    console.log('body---',ctx.body)
+    await next()
+});
+
+
 // 用户
 router.get('/users/check', async(ctx, next)=> {
     console.log('get usercheck---');
     console.log('check---',ctx.session);
     if (ctx.session.uid) {
-        await User.findOne({_id: ctx.session.uid},(err,user)=>{
+        await User.findById(ctx.session.uid,(err,user)=>{
             delete user.password;
             if (user) {
                 ctx.body = {

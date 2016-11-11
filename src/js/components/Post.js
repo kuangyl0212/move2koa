@@ -17,7 +17,7 @@ export default class Post extends React.Component{
     constructor (props) {
         super(props)
         this.state = {
-             title: '',
+            title: '',
             content: '',
             createTime:'',
             windowWidth: window.innerWidth,
@@ -113,18 +113,18 @@ export default class Post extends React.Component{
         let content = this.refs.editor.getContent();
         let successFun = (json)=>{
             // console.log('json---',json);
-            if (json == 'success') {
-                alert('成功！跳转到首页')
+            if (json.msg == 'success') {
+                alert('成功！跳转到文章')
                 this.setState({
                     isSaved: true,
                 })
                 // this.props.history.push('/home');
-                this.context.router.goBack();
+                this.context.router.push('/article/'+json.article_id);
             }
-            if (json == 'title_exist') {
+            if (json.msg == 'title_exist') {
                 alert('标题已经存在，换一个试试？')
             }
-            if (json == 'err') {
+            if (json.msg == 'err') {
                 alert('出错了-_-||')
             }
         }
@@ -132,8 +132,6 @@ export default class Post extends React.Component{
             let post = {
                 title: title,
                 content: content,
-                author: this.state.user.user_name,
-                createTime: new Date(),
             };
             $.ajax({
                 url: '/post',
@@ -164,7 +162,7 @@ export default class Post extends React.Component{
     render () {
         // console.log('state---',this.refs);
         // console.log('render-->Post',this.props);
-        console.log('contex---',this.context);
+        // console.log('contex---',this.context);
         if (this.state.windowWidth > mobileWidth) {
             return (
             <div className="home post">
@@ -175,7 +173,7 @@ export default class Post extends React.Component{
             </div>
         )
         } else {
-            console.log('mobile---');
+            // console.log('mobile---');
             return (
                 <div className="home">
                     <p>编辑功能需要更宽的屏幕</p>

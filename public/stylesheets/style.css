@@ -184,7 +184,7 @@ dropdown input ~ ul {
   padding: 0;
 }
 .listItem {
-  height: 5rem;
+  height: 5.5rem;
   list-style: none;
   /*border-bottom: 1px solid #BBB8AA;*/
 }
@@ -209,7 +209,13 @@ dropdown input ~ ul {
   padding: 1rem;
   margin-top: .6rem;
 }
-
+.link.create-time {
+  float: right;
+  color: #999;
+}
+.link.author {
+  font-size: 14px;
+}
 /*home --end */
 
 /*post --start*/
@@ -280,7 +286,7 @@ dropdown input ~ ul {
   height: 5rem;
   margin-top: .6rem;
   border-radius: .4rem;
-  padding: 1rem;
+  padding: .3rem;
   border: 1px solid #D1CEBC;
   cursor: text;
 }
@@ -293,6 +299,27 @@ dropdown input ~ ul {
 }
 .submit.comment {
   margin: 1rem 0 1rem;
+}
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+.one-comment {
+  margin: .5rem;
+  display: flex;
+  flex-direction: column;
+}
+.comment-time {
+  color: #999;
+}
+.one-comment p {
+  margin: .2rem;
+}
+.by {
+  color: #555;
+}
+.comment-content, .comment-time {
+  padding-left: 1rem;
 }
 /*comments --end*/
 
