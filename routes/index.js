@@ -48,7 +48,7 @@ router.get('/article',async (ctx,next)=>{
         }
         ])
         .exec(function (err, post) {
-            console.log('post---',post.comments);
+            // console.log('post---',post.comments);
             if (err) return console.error(err);
             ctx.body = post;
         });
@@ -60,7 +60,7 @@ router.post('/post',async (ctx,next)=>{
     console.log('POST /post',ctx.request.body);
     let user_promise = new Promise((resolve, reject)=>{
         User.findById(ctx.session.uid, (err,doc)=>{
-            console.log('pppp',doc,err)
+            // console.log('pppp',doc,err)
             if (err) {reject('err')}
             if (doc) {
                 resolve(doc);
@@ -70,7 +70,7 @@ router.post('/post',async (ctx,next)=>{
         })
     });
     let user = await user_promise;
-    console.log('user---',user);
+    // console.log('user---',user);
     await Post.findOne({title: ctx.request.body.title},(err,post)=>{
         // console.log('11111',err,post)
         if (err) ctx.body = {msg:'err'};
@@ -99,7 +99,7 @@ router.post('/comment',async (ctx,next)=>{
     let article_id = ctx.request.body.article_id;
     let user_promise = new Promise((resolve, reject)=>{
         User.findById(ctx.session.uid, (err,doc)=>{
-            console.log('pppp',doc,err)
+            // console.log('pppp',doc,err)
             if (err) {reject('err')}
             if (doc) {
                 resolve(doc);

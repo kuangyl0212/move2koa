@@ -17,7 +17,7 @@ mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPwd + '@'
     + config.dbAddress + ':' + config.dbPort + '/' + config.dbName);
 const db = mongoose.connection;
 // 数据库的log 生产环境请注释掉！TODO
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 db.on('error',console.error.bind(console,'连接错误:'));
 db.once('open',function(){
   //一次打开记录
