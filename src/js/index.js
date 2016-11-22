@@ -3,7 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import Navigator from './components/navigator';
+
+// import Button from 'antd/lib/button';
+// import $ from 'jquery';
 // var Navi = require('./components/Navi');
 
 
@@ -21,6 +26,9 @@ import Post from './components/Post';
 
 import Article from './components/Article';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+
 var App = React.createClass({
     componentWillMount(){
 
@@ -35,15 +43,20 @@ var App = React.createClass({
     }
 });
 
+//Needed for onTouchTap
+injectTapEventPlugin();
+
 // Render the main component into the dom
 ReactDOM.render((
-    <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Home}/>
-            <Route path='(home)' component={Home}/>
-            <Route path='post' component={Post} />
-            <Route path='profile' component={Profile} />
-            <Route path="article/:id" component={Article}/>
-        </Route>
-    </Router>
+    <MuiThemeProvider>
+        <Router history={hashHistory}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Home}/>
+                <Route path='(home)' component={Home}/>
+                <Route path='post' component={Post} />
+                <Route path='profile' component={Profile} />
+                <Route path="article/:id" component={Article}/>
+            </Route>
+        </Router>
+    </MuiThemeProvider>
 ), document.getElementById('app'));
